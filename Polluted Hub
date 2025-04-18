@@ -1,0 +1,135 @@
+local Decimals = 4
+local Clock = os.clock()
+local ValueText = "Value Is Now :"
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/drillygzzly/Roblox-UI-Libs/main/1%20Tokyo%20Lib%20(FIXED)/Tokyo%20Lib%20Source.lua"))({
+    cheatname = "Title Here",
+    gamename = "Title Here",
+})
+
+library:init()
+
+-- 🔔 Softer Notification Chime
+local function PlayNotificationSound()
+    local soundService = game:FindFirstChildOfClass("SoundService") or Instance.new("SoundService", game)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://9107145814"
+    sound.Volume = 0.5
+    sound.Parent = soundService
+    sound:Play()
+    game:GetService("Debris"):AddItem(sound, 2)
+end
+
+local Window1 = library.NewWindow({
+    title = "Title Here | Title Here",
+    size = UDim2.new(0, 510, 0.6, 6)
+})
+
+local Tab1 = Window1:AddTab("  Hot Hubs  ")
+local DeadRailsTab = Window1:AddTab("  Dead Rails  ")
+local JailBreakTab = Window1:AddTab("  JailBreak  ")
+local BlueLockTab = Window1:AddTab("  BlueLock  ")
+local PetSimTab = Window1:AddTab("  PetSim/PetsGO  ") -- ✅ New Tab Added
+local SettingsTab = library:CreateSettingsTab(Window1)
+
+local function AddConfirmableButton(section, buttonName, tooltipText, scriptUrl)
+    local isConfirming = false
+    section:AddButton({
+        enabled = true,
+        text = buttonName,
+        tooltip = tooltipText,
+        confirm = false,
+        risky = false,
+        callback = function()
+            if not isConfirming then
+                isConfirming = true
+                PlayNotificationSound()
+                library:SendNotification("Press again to confirm", 3)
+                task.delay(3, function()
+                    isConfirming = false
+                end)
+            else
+                isConfirming = false
+                PlayNotificationSound()
+                if scriptUrl ~= "" then
+                    library:SendNotification("Loading " .. buttonName .. "...", 3)
+                    loadstring(game:HttpGet(scriptUrl, true))()
+                else
+                    library:SendNotification("Script not available yet.", 3)
+                end
+            end
+        end
+    })
+end
+
+-- 🔥 Hot Hubs
+local Section1 = Tab1:AddSection("Hot Hits", 1)
+AddConfirmableButton(Section1, "Native Hub", "Loads Native Hub script", "https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/NativeHub/Loader.lua")
+AddConfirmableButton(Section1, "Sensation BGSI", "Loads Sensation Hub for BGSI", "https://api.luarmor.net/files/v3/loaders/13c16c9f0a8610300d67bd1e66e05c05.lua")
+AddConfirmableButton(Section1, "Speed Hub X", "Loads Speed Hub X", "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua")
+for i = 1, 6 do AddConfirmableButton(Section1, "ADDING SOON", "Future script placeholder.", "") end
+
+-- 🔧 Script Loader
+local Section2 = Tab1:AddSection("Script Loader", 2)
+local function AddLoaderButton(name, tooltip, url)
+    local isConfirming = false
+    Section2:AddButton({
+        enabled = true,
+        text = name,
+        tooltip = tooltip,
+        confirm = false,
+        risky = false,
+        callback = function()
+            if not isConfirming then
+                isConfirming = true
+                PlayNotificationSound()
+                library:SendNotification("Press again to confirm", 3)
+                task.delay(3, function()
+                    isConfirming = false
+                end)
+            else
+                isConfirming = false
+                PlayNotificationSound()
+                library:SendNotification("Loading " .. name .. "...", 3)
+                loadstring(game:HttpGet(url))()
+            end
+        end
+    })
+end
+
+AddLoaderButton("Infinite Yield", "Loads Infinite Yield", "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source")
+AddLoaderButton("Dex Explorer", "Loads Dex Explorer", "https://raw.githubusercontent.com/infyiff/backup/main/dex.lua")
+for i = 1, 7 do AddConfirmableButton(Section2, "COMING SOON", "Future script.", "") end
+
+-- 🔥 Dead Rails Tab
+local DeadRailsSection = DeadRailsTab:AddSection("Dead Rails Scripts", 1)
+AddConfirmableButton(DeadRailsSection, "Rail Gunner Hub", "Coming Soon...", "")
+AddConfirmableButton(DeadRailsSection, "Track Master", "Coming Soon...", "")
+AddConfirmableButton(DeadRailsSection, "Ghost Rails", "Coming Soon...", "")
+for i = 1, 4 do AddConfirmableButton(DeadRailsSection, "COMING SOON", "Placeholder", "") end
+
+-- 🔥 JailBreak Tab
+local JailBreakSection = JailBreakTab:AddSection("JailBreak Scripts", 1)
+AddConfirmableButton(JailBreakSection, "Auto Robber", "Auto robs everything", "https://raw.githubusercontent.com/Hosvile/Roblox/main/Jailbreak/AutoRob.lua")
+AddConfirmableButton(JailBreakSection, "Teleport GUI", "Teleports around the map", "https://raw.githubusercontent.com/Stefanuk12/JailbreakTeleportGUI/main/TeleportGUI.lua")
+AddConfirmableButton(JailBreakSection, "Vehicle Speed Mod", "Speed up your car", "https://raw.githubusercontent.com/Unknownedz/Jailbreak-VehicleSpeed/main/speed.lua")
+for i = 1, 4 do AddConfirmableButton(JailBreakSection, "COMING SOON", "Placeholder", "") end
+
+-- 🔥 BlueLock Tab
+local BlueLockSection = BlueLockTab:AddSection("BlueLock Scripts", 1)
+AddConfirmableButton(BlueLockSection, "Goal Sniper", "Auto scores goals", "")
+AddConfirmableButton(BlueLockSection, "Training Mode", "Auto trains your skills", "")
+AddConfirmableButton(BlueLockSection, "Speed Boost", "Temporarily boosts speed", "")
+for i = 1, 4 do AddConfirmableButton(BlueLockSection, "COMING SOON", "More BlueLock features soon!", "") end
+
+-- ✅ PetSim/PetsGO Tab
+local PetSimSection = PetSimTab:AddSection("Pet Simulator Scripts", 1)
+AddConfirmableButton(PetSimSection, "Auto Hatch Eggs", "Automatically hatches eggs", "")
+AddConfirmableButton(PetSimSection, "Pet Merger", "Auto merges pets for power", "")
+AddConfirmableButton(PetSimSection, "Coin Magnet", "Auto collects coins around you", "")
+for i = 1, 4 do AddConfirmableButton(PetSimSection, "COMING SOON", "More PetSim features soon!", "") end
+
+-- 🕒 Final Load Notification
+local Time = (string.format("%."..tostring(Decimals).."f", os.clock() - Clock))
+PlayNotificationSound()
+library:SendNotification(("Loaded In "..tostring(Time)), 6)
